@@ -98,7 +98,6 @@ const login = async (payload: TLogin) => {
 
   if (!isPasswordValid) throw new ApiError(401, "Invalid Credentials.");
 
-
   const { password: _, ...userWithoutPassword } = user;
 
   const accessToken = jwtHelpers.generateToken(
@@ -112,7 +111,6 @@ const login = async (payload: TLogin) => {
     config.jwt.refresh_token_secret as Secret,
     config.jwt.refresh_token_expires_in as string
   );
-
 
   return {
     accessToken,
@@ -191,16 +189,12 @@ const resetPassword = async (
 
   const user = await findUserById(payload.id);
 
-
   checkAccountStatus(user);
-
-
 
   const isValidToken = jwtHelpers.verifyToken(
     token,
     config.jwt.reset_pass_secret as Secret
   );
-
 
   if (!isValidToken) throw new ApiError(403, "Forbidden");
 
