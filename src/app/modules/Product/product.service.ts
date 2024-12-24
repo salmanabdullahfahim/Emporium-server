@@ -218,11 +218,6 @@ const updateAProduct = async (id: string, user: any, req: Request) => {
   return updatedProduct;
 };
 
-const testShop = async () => {
-  const shop = await prisma.shop.findMany();
-
-  return shop;
-};
 export const ProductServices = {
   createAProduct,
   duplicateAProduct,
@@ -230,5 +225,4 @@ export const ProductServices = {
   getAllVendorProducts,
   getAProduct,
   updateAProduct,
-  testShop,
 };
