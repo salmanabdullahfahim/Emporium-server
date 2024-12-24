@@ -6,7 +6,7 @@ import { fileUploader } from "../../../helpers/fileUploader";
 import { ShopController } from "./shop.controller";
 
 const router = express.Router();
-router.get("/all-shops", ShopController.getAllShops);
+
 router.post(
   "/create",
   auth(UserRole.VENDOR),
@@ -16,6 +16,7 @@ router.post(
     return ShopController.createShop(req, res, next);
   }
 );
+router.get("/all-shops", ShopController.getAllShops);
 router.get("/:shopId", ShopController.getAShopForShopDetailPage);
 router.get("/", auth(UserRole.VENDOR), ShopController.getAShop);
 
