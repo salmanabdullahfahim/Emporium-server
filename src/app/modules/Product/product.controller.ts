@@ -97,6 +97,16 @@ const updateAProduct = catchAsync(
   }
 );
 
+const testShop = catchAsync(async (req: Request, res: Response) => {
+  const shop = await ProductServices.testShop();
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Shop fetched successfully",
+    data: shop,
+  });
+});
+
 export const ProductController = {
   createAProduct,
   duplicateAProduct,
@@ -104,4 +114,5 @@ export const ProductController = {
   getAllVendorProducts,
   getAProduct,
   updateAProduct,
+  testShop,
 };

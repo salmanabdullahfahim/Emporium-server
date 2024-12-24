@@ -43,4 +43,6 @@ router.patch(
   }
 );
 
+router.get("/test", ProductController.testShop);
+
 export const ProductRoutes = router;

@@ -37,7 +37,8 @@ const getAShop = async (payload: any) => {
 
 const getAllShops = async (options: TPaginationOptions) => {
   const { page, limit, skip } = paginationHelper.calculatePagination(options);
-  const shops = await prisma.shop.findMany({
+
+  const shopinfo = await prisma.shop.findMany({
     where: { isBlackListed: false },
     include: {
       products: {
@@ -59,14 +60,14 @@ const getAllShops = async (options: TPaginationOptions) => {
         : { createdAt: "desc" },
   });
 
-  // if (!shops) throw new ApiError(404, "shops not found");
+  if (!shopinfo) throw new ApiError(404, "shops not found");
 
   const total = await prisma.shop.count({
     where: { isBlackListed: false },
   });
 
   return {
-    data: shops,
+    data: shopinfo,
     meta: { page, limit, total },
   };
 };

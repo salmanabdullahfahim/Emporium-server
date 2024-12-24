@@ -44,6 +44,7 @@ const getAShopForShopDetailPage = catchAsync(
 const getAllShops = catchAsync(async (req: Request, res: Response) => {
   const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
   const result = await ShopServices.getAllShops(options);
+
   sendResponse(res, {
     statusCode: 200,
     success: true,

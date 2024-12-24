@@ -18,8 +18,8 @@ model User {
   deletedAt     DateTime?
   admin         Admin?
   customer      Customer?
-  vendor        Vendor?
   recentProduct RecentProduct[]
+  vendor        Vendor?
 
   @@map("users")
 }
@@ -68,8 +68,8 @@ model Customer {
   user         User      @relation(fields: [email], references: [email])
   follows      Follow[]
   orders       Order[]
-  reviews      Review[]
   payments     Payment[]
+  reviews      Review[]
 
   @@map("customers")
 }
@@ -84,9 +84,8 @@ model Shop {
   updatedAt     DateTime  @updatedAt
   deletedAt     DateTime?
   isBlackListed Boolean   @default(false)
-
-  vendor   Vendor    @relation(fields: [vendorId], references: [id])
-  products Product[]
+  products      Product[]
+  vendor        Vendor    @relation(fields: [vendorId], references: [id])
 
   @@map("shops")
 }
@@ -101,18 +100,18 @@ model Product {
   inventory     Int
   image         String[]
   vendorId      String
-  shopId        String
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   deletedAt     DateTime?
+  shopId        String
   cart          Cart[]
   flashSales    FlashSale[]
-  category      Category        @relation(fields: [categoryId], references: [id])
-  vendor        Vendor          @relation(fields: [vendorId], references: [id])
-  reviews       Review[]
-  shop          Shop            @relation(fields: [shopId], references: [id])
   orderItems    OrderItem[]
+  category      Category        @relation(fields: [categoryId], references: [id])
+  shop          Shop            @relation(fields: [shopId], references: [id])
+  vendor        Vendor          @relation(fields: [vendorId], references: [id])
   recentProduct RecentProduct[]
+  reviews       Review[]
 
   @@map("products")
 }
@@ -138,10 +137,10 @@ model Order {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   deletedAt   DateTime?
-  payment     Payment?
+  order_items OrderItem[]
   customer    Customer    @relation(fields: [customerId], references: [id])
   vendor      Vendor      @relation(fields: [vendorId], references: [id])
-  order_items OrderItem[]
+  payment     Payment?
 
   @@map("orders")
 }
@@ -192,8 +191,8 @@ model Follow {
   id         String   @id @default(uuid())
   customerId String
   vendorId   String
-  isDeleted  Boolean  @default(false)
   createdAt  DateTime @default(now())
+  isDeleted  Boolean  @default(false)
   customer   Customer @relation(fields: [customerId], references: [id])
   vendor     Vendor   @relation(fields: [vendorId], references: [id])
 
@@ -224,8 +223,8 @@ model Payment {
   status        PaymentStatus @default(PENDING)
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
-  order         Order         @relation(fields: [orderId], references: [id])
   customer      Customer      @relation(fields: [customerId], references: [id])
+  order         Order         @relation(fields: [orderId], references: [id])
 
   @@map("payments")
 }
@@ -235,8 +234,8 @@ model RecentProduct {
   userId    String
   productId String
   visitedAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
   product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@map("recent_products")
 }
