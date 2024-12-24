@@ -8,7 +8,7 @@ const app: Application = express();
 // CORS configuration
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "https://emporium-client.vercel.app"],
     credentials: true,
   })
 );
